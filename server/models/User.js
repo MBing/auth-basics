@@ -1,14 +1,18 @@
+const { hashPassword } = require('../utils/hashPassword');
+
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-// Define Model
 const userSchema = new Schema({
   email: { type: String, unique: true, lowercase: true },
   password: String,
 });
 
-// Create model class
-const ModelClass = mongoose.model('user', userSchema);
+userSchema.pre('save', async function (next) {
+  const user = this;
+  user.password = await hashPassword(user.password);
 
-// Export model
-module.exports = ModelClass;
+  next();
+});
+
+module.exports = mongoose.model('user', userSchema);;
