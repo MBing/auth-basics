@@ -1,4 +1,4 @@
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcrypt'); // TODO: when using bcryptjs you can use async await out of the box
 const saltRounds = 10;
 
 const hashPassword = password =>
