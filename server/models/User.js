@@ -15,6 +15,6 @@ userSchema.pre('save', async function(next) {
   next();
 });
 
-userSchema.methods.comparePassword = comparePasswords;
+userSchema.methods.comparePasswords = comparePasswords;
 
 module.exports = mongoose.model('user', userSchema);

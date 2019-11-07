@@ -44,7 +44,7 @@ const signup = (req, res, next) => {
 };
 
 const signin = (req, res, next) => {
-  res.send({token: tokenForUser(req.user)})
+  res.send({ token: tokenForUser(req.user) });
 };
 
 module.exports = { signup, signin };

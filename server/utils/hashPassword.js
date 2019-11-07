@@ -1,21 +1,20 @@
-const bcrypt = require('bcrypt'); // TODO: when using bcryptjs you can use async await out of the box
+const bcrypt = require('bcryptjs');
 const saltRounds = 10;
 
-const hashPassword = password =>
-  new Promise((resolve, reject) => {
-    bcrypt.hash(password, saltRounds, (err, hash) => {
-      if (err) return reject(err);
+const hashPassword = async password => {
+  const salt = await bcrypt.genSalt(saltRounds);
+  const hash = await bcrypt.hash(password, salt);
 
-      return resolve(hash);
-    });
-  });
+  return hash;
+};
 
-const comparePasswords = function(candidatePassword, done) {
-  bcrypt.compare(candidatePassword, this.password, (err, isMatch) => {
-    if (err) return done(err);
-
-    done(null, isMatch);
-  });
+const comparePasswords = (candidatePassword, done) => async user =>{
+  try {
+    const isMatch = await bcrypt.compare(candidatePassword, user.password);
+    return done(null, isMatch);
+  } catch (err) {
+    return done(err);
+  }
 };
 
 module.exports = { hashPassword, comparePasswords };

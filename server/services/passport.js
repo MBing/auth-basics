@@ -5,29 +5,34 @@ const LocalStrategy = require('passport-local');
 
 const localOptions = { usernameField: 'email' };
 const localLogin = new LocalStrategy(localOptions, (email, password, done) => {
-  User.findOne({ email: email }, (err, user) => {
+  User.findOne({ email: email }, async (err, user) => {
     if (err) return done(err, false);
     if (!user) return done(null, false);
 
-    user.comparePasswords(password, (err, isMatch) => {
-      if (err) return done(err);
-      if (!isMatch) return done(null, false);
+    try {
+      const isMatch = await user.comparePasswords(password, done);
 
-      return done(null, user);
-    })
+      if (!isMatch) return done(null, false);
+    } catch (error) {
+      return done(error);
+    }
+
+    return done(null, user);
   });
 });
 
+const secret = process.env.SESSION_SECRET || 'SECRET';
+
 const jwtOptions = {
   jwtFromRequest: ExtractJwt.fromHeader('Authorization'),
-  secretOrKey: process.env.SESSION_SECRET || 'SECRET',
+  secretOrKey: secret,
 };
 
 const jwtLogin = new Strategy(jwtOptions, (payload, done) => {
   User.findById(payload.sub, (err, user) => {
     if (err) return done(err);
 
-    if(user){
+    if (user) {
       done(null, user);
     } else {
       done(null, false);
