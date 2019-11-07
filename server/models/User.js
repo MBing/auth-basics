@@ -1,4 +1,4 @@
-const { hashPassword } = require('../utils/hashPassword');
+const { hashPassword, comparePasswords } = require('../utils/hashPassword');
 
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
@@ -8,11 +8,13 @@ const userSchema = new Schema({
   password: String,
 });
 
-userSchema.pre('save', async function (next) {
+userSchema.pre('save', async function(next) {
   const user = this;
   user.password = await hashPassword(user.password);
 
   next();
 });
 
-module.exports = mongoose.model('user', userSchema);;
+userSchema.methods.comparePassword = comparePasswords;
+
+module.exports = mongoose.model('user', userSchema);

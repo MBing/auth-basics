@@ -10,4 +10,12 @@ const hashPassword = password =>
     });
   });
 
-module.exports = { hashPassword };
+const comparePasswords = function(candidatePassword, done) {
+  bcrypt.compare(candidatePassword, this.password, (err, isMatch) => {
+    if (err) return done(err);
+
+    done(null, isMatch);
+  });
+};
+
+module.exports = { hashPassword, comparePasswords };
