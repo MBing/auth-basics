@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
 import { Field, reduxForm } from 'redux-form';
+import { compose } from 'redux';
+import { connect } from 'react-redux';
+import * as actions from '../../actions';
 
 class RegisterContainer extends Component {
   onSubmit = formProps => {
-    console.log(formProps);
+    this.props.register(formProps)
   };
   render() {
     const { handleSubmit } = this.props;
@@ -33,5 +36,9 @@ class RegisterContainer extends Component {
   }
 }
 
-const Register = reduxForm({ form: 'register' })(RegisterContainer);
+const Register = compose(
+  connect(null, actions),
+  reduxForm({ form: 'register' })
+)(RegisterContainer);
+
 export { Register };

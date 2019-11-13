@@ -9,6 +9,6 @@ module.exports = app => {
   app.get('/', requireAuth, (req, res) => {
     res.send({ hi: 'there' });
   });
-  app.post('/signin', requireSignin, signin);
-  app.post('/signup', signup);
+  app.post('/login', requireSignin, signin);
+  app.post('/register', signup);
 };
