@@ -6,7 +6,9 @@ import * as actions from '../../actions';
 
 class RegisterContainer extends Component {
   onSubmit = formProps => {
-    this.props.register(formProps)
+    this.props.register(formProps, () => {
+        this.props.history.push('/feature')
+    });
   };
   render() {
     const { handleSubmit } = this.props;
@@ -30,14 +32,19 @@ class RegisterContainer extends Component {
             autoComplete="none"
           />
         </fieldset>
+        <div>{this.props.errorMessage}</div>
         <button type="submit">Sign Up</button>
       </form>
     );
   }
 }
 
+const mapStateToProps = state => ({
+  errorMessage: state.auth.errorMessage,
+});
+
 const Register = compose(
-  connect(null, actions),
+  connect(mapStateToProps, actions),
   reduxForm({ form: 'register' })
 )(RegisterContainer);
 
