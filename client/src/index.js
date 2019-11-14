@@ -8,6 +8,7 @@ import { Provider } from 'react-redux';
 import { applyMiddleware, createStore } from 'redux';
 import { reducers } from './reducers';
 import thunk from 'redux-thunk';
+import { Feature } from './components/Feature';
 
 const store = createStore(reducers, {}, applyMiddleware(thunk));
 
@@ -17,6 +18,7 @@ ReactDOM.render(
       <App>
         <Route path="/" component={Welcome} />
         <Route path="/register" component={Register} />
+        <Route path="/feature" component={Feature} />
       </App>
     </BrowserRouter>
   </Provider>,
