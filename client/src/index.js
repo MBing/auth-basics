@@ -10,7 +10,9 @@ import { reducers } from './reducers';
 import thunk from 'redux-thunk';
 import { Feature } from './components/Feature';
 
-const store = createStore(reducers, {}, applyMiddleware(thunk));
+const store = createStore(reducers, {
+    auth: { authenticated: localStorage.getItem('mb-auth')}
+}, applyMiddleware(thunk));
 
 ReactDOM.render(
   <Provider store={store}>

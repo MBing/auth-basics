@@ -21,7 +21,7 @@ const requireAuth = ChildComponent => {
     }
   }
 
-  const mapStateToProps = state => ({ auth: state.authenticated });
+  const mapStateToProps = state => ({ auth: state.auth.authenticated });
   return connect(mapStateToProps)(ComposedComponent);
 };
 

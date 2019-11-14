@@ -12,6 +12,7 @@ class RegisterContainer extends Component {
   };
   render() {
     const { handleSubmit } = this.props;
+    console.log('props error', this.props.errorMessage);
     return (
       <form onSubmit={handleSubmit(this.onSubmit)}>
         <fieldset>

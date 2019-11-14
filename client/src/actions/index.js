@@ -17,8 +17,10 @@ export const register = (formProps, callback) => async dispatch => {
       type: AUTH_USER,
       payload: response.data.token,
     });
+    localStorage.setItem('mb-auth', response.data.token); // store the token for persistence
     callback(); // here the redirect happens
   } catch (error) {
-    dispatch({ type: AUTH_ERROR, payload: error });
+    // using this error when thrown will not make it easy to show in the UI, so we use a more readable error
+    dispatch({ type: AUTH_ERROR, payload: error.response.data.error });
   }
 };
