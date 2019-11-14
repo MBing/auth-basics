@@ -24,3 +24,12 @@ export const register = (formProps, callback) => async dispatch => {
     dispatch({ type: AUTH_ERROR, payload: error.response.data.error });
   }
 };
+
+export const logout = () => {
+  localStorage.removeItem('mb-auth');
+
+  return {
+    type: AUTH_USER,
+    payload: '',
+  };
+};

@@ -9,6 +9,7 @@ import { applyMiddleware, createStore } from 'redux';
 import { reducers } from './reducers';
 import thunk from 'redux-thunk';
 import { Feature } from './components/Feature';
+import {Logout} from "./components/auth/Logout";
 
 const store = createStore(reducers, {
     auth: { authenticated: localStorage.getItem('mb-auth')}
@@ -21,6 +22,7 @@ ReactDOM.render(
         <Route path="/" component={Welcome} />
         <Route path="/register" component={Register} />
         <Route path="/feature" component={Feature} />
+        <Route path="/logout" component={Logout} />
       </App>
     </BrowserRouter>
   </Provider>,
