@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
+import './HeaderStyle.css';
+
 class HeaderContainer extends Component {
   renderLinks() {
     if (this.props.authenticated) {
@@ -22,7 +24,7 @@ class HeaderContainer extends Component {
   }
   render() {
     return (
-      <div>
+      <div className="header">
         <Link to="/">Redux Auth</Link>
 
         {this.renderLinks()}
