@@ -25,6 +25,25 @@ export const register = (formProps, callback) => async dispatch => {
   }
 };
 
+export const login = (formProps, callback) => async dispatch => {
+  try {
+    const response = await axios.post(
+        'http://localhost:3090/login',
+        formProps
+    );
+
+    dispatch({
+      type: AUTH_USER,
+      payload: response.data.token,
+    });
+    localStorage.setItem('mb-auth', response.data.token); // store the token for persistence
+    callback(); // here the redirect happens
+  } catch (error) {
+    // using this error when thrown will not make it easy to show in the UI, so we use a more readable error
+    dispatch({ type: AUTH_ERROR, payload: error.response.data.error });
+  }
+};
+
 export const logout = () => {
   localStorage.removeItem('mb-auth');
 

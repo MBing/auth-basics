@@ -44,7 +44,27 @@ const signup = (req, res, next) => {
 };
 
 const signin = (req, res, next) => {
-  res.send({ token: tokenForUser(req.user) });
+  const { email, password } = req.body;
+
+  if (!email || !password) {
+    return res
+        .status(422)
+        .send({ error: 'You must provide email and password!' });
+  }
+  // TODO: add proper validation for the email
+
+  // check if user with email exists
+  User.findOne({ email: email }, async (err, matchingUser) => {
+    if (err) return next(err);
+
+
+    if (matchingUser) {
+      // TODO: check if password matches!
+      return res.json({ token: tokenForUser(matchingUser) });
+    }
+
+    return res.status(422).send({ error: 'Invalid credentials!' });
+  });
 };
 
 module.exports = { signup, signin };

@@ -2,12 +2,12 @@ import React, { Component } from 'react';
 import { Field, reduxForm } from 'redux-form';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
-import * as actions from '../../actions';
+import { login } from '../../actions';
 
-class RegisterContainer extends Component {
+class LoginContainer extends Component {
   onSubmit = formProps => {
-    this.props.register(formProps, () => {
-        this.props.history.push('/feature')
+    this.props.login(formProps, () => {
+      this.props.history.push('/feature');
     });
   };
   render() {
@@ -44,9 +44,9 @@ const mapStateToProps = state => ({
   errorMessage: state.auth.errorMessage,
 });
 
-const Register = compose(
-  connect(mapStateToProps, actions),
+const Login = compose(
+  connect(mapStateToProps, { login }),
   reduxForm({ form: 'register' })
-)(RegisterContainer);
+)(LoginContainer);
 
-export { Register };
+export { Login };
